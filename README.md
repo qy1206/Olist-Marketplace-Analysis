@@ -15,8 +15,7 @@ commercial performance, fulfilment, and customer experience.
 - [Final Power BI report](powerbi/Olist_Marketplace_Analytics_Portfolio.pbix)
 - [15-file SQL pipeline](sql/)
 - [Raw-data inventory and join audit](docs/data_inventory.md)
-- [Bilingual project guide](docs/Olist_Marketplace_Analytics_Complete_Guide_Bilingual.docx)
-- [Bilingual SQL revision guide](docs/sql_syntax_guide_bilingual.md)
+- [Automated repository and PBIX checks](tests/test_repository.py)
 
 ## Solution architecture
 
@@ -79,11 +78,9 @@ keys, duplicate findings, and join coverage.
 
 ```text
 olist-marketplace-analytics/
-|-- data/                 # Local raw/processed data; raw CSVs are Git-ignored
-|-- docs/                 # Data audit and bilingual project documentation
-|-- outputs/              # Portfolio exports and screenshots
-|-- powerbi/              # Final PBIX, theme, and reproducible styling scripts
-|-- scripts/              # Lightweight local profiling helpers
+|-- docs/                 # Published data inventory and join audit
+|-- powerbi/              # Final PBIX report and reusable theme
+|-- scripts/              # Raw-data profiling helper
 |-- sql/                  # 15 ordered BigQuery SQL files
 |-- tests/                # Repository and PBIX integrity checks
 `-- README.md
@@ -91,9 +88,9 @@ olist-marketplace-analytics/
 
 ## Reproduce the project
 
-1. Download the **Brazilian E-Commerce Public Dataset by Olist** and place the
-   eleven CSV files under `data/raw/`. Raw data is intentionally excluded from
-   GitHub.
+1. Download the [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
+   and place the eleven CSV files under `data/raw/`. Raw data is intentionally
+   excluded from GitHub.
 2. In BigQuery, create datasets named `olist_raw`, `olist_staging`,
    `olist_marts`, `olist_analysis`, and `olist_quality` in the same location.
 3. Upload the CSV files into `olist_raw` using the table names referenced by the

@@ -10,11 +10,13 @@ data/raw/**/*.zip
 
 # Generated data outputs
 data/processed/*
-!data/processed/.gitkeep
 data/powerbi_exports/*
-!data/powerbi_exports/.gitkeep
 outputs/*
-!outputs/.gitkeep
+
+# Generated internal documentation
+docs/*.docx
+docs/*.pdf
+docs/data_inventory.json
 
 # Microsoft Office temporary files
 ~$*

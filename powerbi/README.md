@@ -6,16 +6,12 @@
 GitHub. It contains five report pages, 54 visual objects, the semantic model,
 DAX measures, and the embedded `Olist Portfolio Theme`.
 
-## Supporting files
+## Supporting file
 
-- `Olist_Portfolio_Theme.json` — reusable report theme
-- `style_all_pages.py` — applies the portfolio layout and styling to all pages
-- `style_executive_overview.py` — shared PBIX layout and theme helpers
-- `build_dashboard_layout.py` — reproducible report-page construction helper
-- `configure_measures.ps1` — local Power BI measure configuration helper
+- `Olist_Portfolio_Theme.json` — reusable report theme matching the published
+  PBIX.
 
-Other PBIX files in this folder are local working copies or recovery files and
-are excluded by `.gitignore`.
+Working copies and recovery files are excluded by `.gitignore`.
 
 ## Validation scope
 

@@ -53,11 +53,23 @@ class RepositoryStructureTests(unittest.TestCase):
         required = [
             ROOT / "README.md",
             ROOT / "docs" / "data_inventory.md",
-            ROOT / "docs" / "project_structure.md",
             ROOT / "powerbi" / "README.md",
         ]
         for path in required:
             self.assertTrue(path.is_file(), path)
+
+    def test_repository_excludes_internal_artifacts(self) -> None:
+        forbidden_suffixes = {".docx", ".pdf"}
+        forbidden = [
+            path
+            for path in ROOT.rglob("*")
+            if ".git" not in path.parts
+            and (
+                path.name == ".gitkeep"
+                or (path.is_file() and path.suffix.lower() in forbidden_suffixes)
+            )
+        ]
+        self.assertEqual([], forbidden)
 
 
 class PowerBIArtifactTests(unittest.TestCase):
