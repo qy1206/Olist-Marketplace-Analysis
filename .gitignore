@@ -1,0 +1,37 @@
+# Local Python environment and cache
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Raw source data is downloaded from Kaggle and is not committed
+data/raw/**/*.csv
+data/raw/**/*.zip
+
+# Generated data outputs
+data/processed/*
+!data/processed/.gitkeep
+data/powerbi_exports/*
+!data/powerbi_exports/.gitkeep
+outputs/*
+!outputs/.gitkeep
+
+# Microsoft Office temporary files
+~$*
+docs/~$*
+
+# Temporary document-render verification files
+docs/_render*/
+
+# Power BI working files and recovery copies
+powerbi/*.pbix
+!powerbi/Olist_Marketplace_Analytics_Portfolio.pbix
+powerbi/recovery_backup_*/
+powerbi/validation_pages/
+*.pbit.tmp
+
+# Local editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
