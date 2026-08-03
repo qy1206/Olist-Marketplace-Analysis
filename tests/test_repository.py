@@ -53,10 +53,26 @@ class RepositoryStructureTests(unittest.TestCase):
         required = [
             ROOT / "README.md",
             ROOT / "docs" / "data_inventory.md",
+            ROOT / "docs" / "images" / "executive-overview.png",
+            ROOT / "docs" / "images" / "acquisition-funnel.png",
+            ROOT / "docs" / "images" / "data-model.png",
             ROOT / "powerbi" / "README.md",
         ]
         for path in required:
             self.assertTrue(path.is_file(), path)
+
+    def test_readme_documents_decisions_and_kpi_definitions(self) -> None:
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        required_phrases = [
+            "## Dashboard preview",
+            "## Business findings and recommendations",
+            "## KPI definitions",
+            "It excludes freight charges",
+            "Activated seller",
+            "On-time delivery",
+        ]
+        for phrase in required_phrases:
+            self.assertIn(phrase, readme)
 
     def test_repository_excludes_internal_artifacts(self) -> None:
         forbidden_suffixes = {".docx", ".pdf"}

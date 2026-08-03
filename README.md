@@ -17,6 +17,26 @@ commercial performance, fulfilment, and customer experience.
 - [Raw-data inventory and join audit](docs/data_inventory.md)
 - [Automated repository and PBIX checks](tests/test_repository.py)
 
+## Dashboard preview
+
+The screenshots below are direct captures from the packaged PBIX. They let a
+reviewer assess the report without installing Power BI or refreshing BigQuery.
+
+### Executive Overview
+
+![Executive Overview dashboard showing marketplace KPIs and monthly trends](docs/images/executive-overview.png)
+
+### Acquisition Funnel
+
+![Acquisition Funnel dashboard showing leads, wins, activation and channel conversion](docs/images/acquisition-funnel.png)
+
+### Semantic model
+
+![Power BI semantic model with shared date, seller and origin dimensions](docs/images/data-model.png)
+
+The downloadable PBIX also contains **Seller Performance**, **Fulfilment and
+CX**, and a seller-level **Seller Detail** drill-through page.
+
 ## Solution architecture
 
 ```mermaid
@@ -50,7 +70,7 @@ functions, and explicit grain management.
 
 ## Power BI report
 
-The final report contains **five pages and 54 visual objects**:
+The final report contains **five decision-focused pages**:
 
 1. **Executive Overview** — orders, GMV, AOV, active sellers, delivery, and reviews
 2. **Acquisition Funnel** — leads, wins, conversion, activation, and channel quality
@@ -73,6 +93,36 @@ marts.
 
 See [the full data inventory](docs/data_inventory.md) for row counts, candidate
 keys, duplicate findings, and join coverage.
+
+## Business findings and recommendations
+
+| Evidence-backed finding | Decision implication |
+|---|---|
+| **Paid search** converted 1,586 leads into 195 wins (**12.30%**) and 101 activated sellers; its closed-to-activation rate was **51.79%**. | Treat paid search as a scalable acquisition channel, while monitoring seller value and fulfilment quality before increasing spend. |
+| **Organic search** produced the largest identifiable-channel volume: 2,296 leads, 271 wins, and **113 activated sellers**. Its lead-to-close rate was **11.80%**, but closed-to-activation was lower at **41.70%**. | Preserve organic investment, then strengthen post-close onboarding to convert more won sellers into marketplace activity. |
+| **Direct traffic** had the strongest closed-to-activation rate among material, attributable channels at **55.36%** (31 of 56 won leads), despite only 499 leads. | Investigate what makes direct-intent sellers activate successfully and reuse those onboarding signals in higher-volume channels. |
+| **Social** generated 1,350 leads but only 75 wins (**5.56%**) and 31 activations. | Tighten targeting and lead qualification; volume alone is not producing comparable commercial progression. |
+| The **unknown** origin category recorded the highest apparent lead-to-close rate (**16.65%**) across 1,159 leads, so attribution gaps materially affect channel comparison. | Fix source tagging before reallocating budget based solely on channel rankings. |
+
+These findings are descriptive, not causal. Channel recommendations should be
+validated against acquisition cost, which is not included in the public Olist
+dataset.
+
+## KPI definitions
+
+| KPI | Portfolio definition |
+|---|---|
+| **Product GMV** | Sum of `item_price` across order items. It excludes freight charges and is kept separate from payment value. |
+| **AOV** | Product GMV divided by distinct orders in the current filter context. |
+| **Active seller** | Distinct `seller_id` values appearing in marketplace order items in the selected period. |
+| **Won lead / closed deal** | A marketing-qualified lead with a matching record in `closed_deals`. |
+| **Activated seller** | A won lead whose `seller_id` has at least one marketplace order on or after `won_date`. |
+| **Lead-to-close rate** | Won leads divided by total marketing-qualified leads. |
+| **Closed-to-activation rate** | Activated sellers divided by won leads. |
+| **On-time delivery** | A delivered order where `order_delivered_customer_date <= order_estimated_delivery_date`. |
+| **Late delivery** | A delivered order where `order_delivered_customer_date > order_estimated_delivery_date`. |
+| **Reviewed order** | An `order_id` with at least one distinct `review_id`; review metrics are aggregated to order level before joining. |
+| **Post-win sales** | Orders attributed to a closed seller where `purchase_date >= DATE(won_date)`. |
 
 ## Repository structure
 
